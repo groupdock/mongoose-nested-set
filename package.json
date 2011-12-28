@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "mongoose": "~2.4.5",
-    "step": "~0.0.5"
+    "async": "~0.1.15"
   },
   "devDependencies": {
     "nodeunit": "~0.6.4"
