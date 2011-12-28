@@ -1,3 +1,5 @@
+'use strict'
+
 var ObjectId = require('mongoose').Types.ObjectId
 
 exports.isObjectId = function(id) {
