@@ -1,0 +1,32 @@
+{
+  "author": "Luc Castera <luc.castera@gmail.com> (https://github.com/dambalah)",
+  "name": "mongoose-nested-set",
+  "description": "A mongoose plugin implementing the nested set pattern for mongoose models",
+  "homepage": "https://github.com/groupdock/mongoose-nested-set",
+  "keywords": [
+    "mongoose",
+    "mongodb",
+    "nested set",
+    "nested-set",
+    "nested set pattern"
+  ],
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/groupdock/mongoose-nested-set.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "nodeunit tests/*_test.js"
+  },
+  "engines": {
+    "node": "< 0.7.x"
+  },
+  "dependencies": {
+    "mongoose": "~2.4.5",
+    "step": "~0.0.5"
+  },
+  "devDependencies": {
+    "nodeunit": "~0.6.4"
+  }
+}
