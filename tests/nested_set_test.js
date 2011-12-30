@@ -374,7 +374,53 @@ var tests = testCase({
       test.done();
     });
   },
-  'adding a new leaf node the a built tree should re-arrange the tree correctly': function(test) {
+  'adding a new node to a built tree should re-arrange the tree correctly': function(test) {
+    test.expect(18)
+    User.findOne({username: 'michael'}, function(err, michael) {
+      User.rebuildTree(michael, 1, function() {
+        User.findOne({username: 'creed'}, function(err, creed) {
+          creed.remove(function() {
+            User.find(function(err, users) {
+              // see docs/test_tree_after_leaf_insertion.png for the graphical representation of this tree 
+              // with lft/rgt values after the insertion
+              users.forEach(function(person) {
+                if (person.username === 'michael') {
+                  test.equal(1, person.lft);
+                  test.equal(18, person.rgt);
+                } else if (person.username === 'meredith') {
+                  test.equal(2, person.lft);
+                  test.equal(5, person.rgt);
+                } else if (person.username === 'jim') {
+                  test.equal(6, person.lft);
+                  test.equal(13, person.rgt);
+                } else if (person.username === 'angela') {
+                  test.equal(14, person.lft);
+                  test.equal(17, person.rgt);
+                } else if (person.username === 'kelly') {
+                  test.equal(3, person.lft);
+                  test.equal(4, person.rgt);
+                } else if (person.username === 'phyllis') {
+                  test.equal(7, person.lft);
+                  test.equal(8, person.rgt);
+                } else if (person.username === 'stanley') {
+                  test.equal(9, person.lft);
+                  test.equal(10, person.rgt);
+                } else if (person.username === 'dwight') {
+                  test.equal(11, person.lft);
+                  test.equal(12, person.rgt);
+                } else if (person.username === 'oscar') {
+                  test.equal(15, person.lft);
+                  test.equal(16, person.rgt);
+                }
+              });
+              test.done();
+            });
+          });
+        });
+      });
+    });
+  },
+  'removing a node to a built tree should re-arrange the tree correctly': function(test) {
     test.expect(22)
     User.findOne({username: 'michael'}, function(err, michael) {
       User.rebuildTree(michael, 1, function() {
