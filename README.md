@@ -21,6 +21,13 @@ UserSchema.plugin(NestedSetPlugin);
 var User = mongoose.model('User', UserSchema);
 ```
 
+### Attributes
+
+The plugin adds the following attributes to the model:
+* lft: holds the left value of the node in the tree
+* rgt: holds the right value of the node in the tree
+* parentId: holds the _id of the parent node
+
 ### Examples
 
 Examples are based on the following tree:
@@ -87,6 +94,7 @@ The following methods must be used with a callback. The callback method will be 
 
 ### Related Links/Resources
 
+* Inspired by [Rails nested_set library] (https://github.com/skyeagle/nested_set)
 * [Mongoose Documentation] (http://mongoosejs.com/)
 * [Mongoose Plugins] (http://mongoosejs.com/docs/plugins.html)
 * [Tree used in test and examples] (https://github.com/groupdock/mongoose-nested-set/raw/master/docs/test_tree.png)
