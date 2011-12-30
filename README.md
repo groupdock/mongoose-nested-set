@@ -41,6 +41,7 @@ User.findOne({username: 'michael'}, function(err, michael) {
 });
 ```
 
+For more examples, see our [test suite] (https://github.com/groupdock/mongoose-nested-set/blob/master/tests/nested_set_test.js).
 
 ### API
 
