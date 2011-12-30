@@ -46,38 +46,38 @@ User.findOne({username: 'michael'}, function(err, michael) {
 
 ### Static methods
 
-__Model.rebuildTree(rootNode, leftValueOfRootNode, callback)__
+* Model.rebuildTree(rootNode, leftValueOfRootNode, callback)
 
 #### Instance methods that return values:
 
-__isLeaf()__
+* isLeaf()
 
-__isChild()__
+* isChild()
 
-__isDescendantOf(otherNode)__
+* isDescendantOf(otherNode)
 
-__isAncestorOf(otherNode)__
+* isAncestorOf(otherNode)
 
 
 #### Instance methods that use a callback function:
 
-__selfAndAncestors(callback)__
+* selfAndAncestors(callback)
 
-__ancestors(callback)__
+* ancestors(callback)
 
-__selfAndChildren(callback)__
+* selfAndChildren(callback)
 
-__children(callback)__
+* children(callback)
 
-__selfAndDescendants(callback)__
+* selfAndDescendants(callback)
 
-__descendants(callback)__
+* descendants(callback)
 
-__level(callback)__
+* level(callback)
 
-__selfAndSiblings(callback)__
+* selfAndSiblings(callback)
 
-__siblings(callback)__
+* siblings(callback)
 
 
 ### Related Links/Resources
