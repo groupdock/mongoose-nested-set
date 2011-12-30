@@ -167,6 +167,22 @@ var tests = testCase({
       });
     });
   },
+  'parent should return parent node': function(test) {
+    test.expect(4);
+    User.findOne({username: 'michael'}, function(err, user) {
+      User.rebuildTree(user, 1, function() {
+        User.findOne({username: 'kelly'}, function(err, kelly) {
+          test.ok(!err)
+          test.ok(kelly)
+          kelly.parent(function(err, node) {
+            test.ok(!err);
+            test.equal('meredith',node.username)
+            test.done()
+          });
+        });
+      });
+    });
+  },
   'selfAndAncestors should return all ancestors higher up in tree + current node': function(test) {
     test.expect(2);
     User.findOne({username: 'michael'}, function(err, user) {
@@ -341,6 +357,75 @@ var tests = testCase({
           test.ok(michael.isAncestorOf(kelly));
           test.ok(!kelly.isAncestorOf(michael));
           test.done();
+        });
+      });
+    });
+  },
+  'pre save middleware should not set lft and rgt if there is no parentId': function(test) {
+    test.expect(4);
+    var user = new User({
+      username: 'joe'
+    })
+    user.save(function(err, joe) {
+      test.ok(!err);
+      test.equal('joe', joe.username);
+      test.ok(!joe.lft);
+      test.ok(!joe.rgt);
+      test.done();
+    });
+  },
+  'adding a new leaf node the a built tree should re-arrange the tree correctly': function(test) {
+    test.expect(22)
+    User.findOne({username: 'michael'}, function(err, michael) {
+      User.rebuildTree(michael, 1, function() {
+        User.findOne({username: 'creed'}, function(err, creed) {
+          var newUser = new User({
+            username: 'joe',
+            parentId: creed._id
+          })
+          newUser.save(function(err, joe) {
+            User.find(function(err, users) {
+              // see docs/test_tree_after_leaf_insertion.png for the graphical representation of this tree 
+              // with lft/rgt values after the insertion
+              users.forEach(function(person) {
+                if (person.username === 'michael') {
+                  test.equal(1, person.lft);
+                  test.equal(22, person.rgt);
+                } else if (person.username === 'meredith') {
+                  test.equal(2, person.lft);
+                  test.equal(9, person.rgt);
+                } else if (person.username === 'jim') {
+                  test.equal(10, person.lft);
+                  test.equal(17, person.rgt);
+                } else if (person.username === 'angela') {
+                  test.equal(18, person.lft);
+                  test.equal(21, person.rgt);
+                } else if (person.username === 'kelly') {
+                  test.equal(3, person.lft);
+                  test.equal(4, person.rgt);
+                } else if (person.username === 'creed') {
+                  test.equal(5, person.lft);
+                  test.equal(8, person.rgt);
+                } else if (person.username === 'phyllis') {
+                  test.equal(11, person.lft);
+                  test.equal(12, person.rgt);
+                } else if (person.username === 'stanley') {
+                  test.equal(13, person.lft);
+                  test.equal(14, person.rgt);
+                } else if (person.username === 'dwight') {
+                  test.equal(15, person.lft);
+                  test.equal(16, person.rgt);
+                } else if (person.username === 'oscar') {
+                  test.equal(19, person.lft);
+                  test.equal(20, person.rgt);
+                } else if (person.username === 'joe') {
+                  test.equal(6, person.lft);
+                  test.equal(7, person.rgt);
+                }
+              });
+              test.done();
+            });
+          });
         });
       });
     });
