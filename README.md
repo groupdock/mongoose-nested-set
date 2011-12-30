@@ -18,7 +18,7 @@ var UserSchema = new Schema({
 // Include plugin
 UserSchema.plugin(NestedSetPlugin);
 
-User = mongoose.model('User', UserSchema);
+var User = mongoose.model('User', UserSchema);
 ```
 
 ### Examples
