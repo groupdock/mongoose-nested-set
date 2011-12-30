@@ -50,6 +50,8 @@ User.findOne({username: 'michael'}, function(err, michael) {
 
 #### Instance methods that return values:
 
+The following methods return a boolean:
+
 * isLeaf()
 
 * isChild()
@@ -60,6 +62,8 @@ User.findOne({username: 'michael'}, function(err, michael) {
 
 
 #### Instance methods that use a callback function:
+
+The following methods must be used with a callback. The callback method will be called with two arguments: the first argument is the error object (if there was no error, it will be null) and the second argument is the data returned.
 
 * selfAndAncestors(callback)
 
