@@ -24,8 +24,11 @@ var User = mongoose.model('User', UserSchema);
 ### Attributes
 
 The plugin adds the following attributes to the model:
+
 * lft: holds the left value of the node in the tree
+
 * rgt: holds the right value of the node in the tree
+
 * parentId: holds the _id of the parent node
 
 ### Examples
