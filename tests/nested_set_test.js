@@ -1,4 +1,6 @@
-'use strict'
+/*globals require, module, console, setTimeout */
+
+'use strict';
 
 var testCase = require('nodeunit').testCase,
     mongoose = require('mongoose'),
@@ -8,7 +10,7 @@ var testCase = require('nodeunit').testCase,
     Helpers = require('./helpers');
 
 var UserSchema,
-    User
+    User;
 
 var tests = testCase({
   setUp: function(next) {
@@ -57,14 +59,14 @@ var tests = testCase({
           stanley,
           dwight,
           oscar
-        ], function(item, cb) { item.save(cb) }, function(err) {
+        ], function(item, cb) { item.save(cb); }, function(err) {
           setTimeout(callback, 500);
-        })
+        });
       },
       function(callback) {
         next();
       }
-    ])
+    ]);
   },
   tearDown: function(callback) {
     mongoose.disconnect(callback);
@@ -143,7 +145,7 @@ var tests = testCase({
     });
   },
   'isLeaf should return true if node is leaf': function(test) {
-    test.expect(2)
+    test.expect(2);
     User.findOne({username: 'michael'}, function(err, user) {
       User.rebuildTree(user, 1, function() {
         User.findOne({username: 'kelly'}, function(err, kelly) {
@@ -157,7 +159,7 @@ var tests = testCase({
     });
   },
   'isChild should return true if node has a parent': function(test) {
-    test.expect(2)
+    test.expect(2);
     User.findOne({username: 'michael'}, function(err, user) {
       User.rebuildTree(user, 1, function() {
         User.findOne({username: 'kelly'}, function(err, kelly) {
@@ -175,12 +177,12 @@ var tests = testCase({
     User.findOne({username: 'michael'}, function(err, user) {
       User.rebuildTree(user, 1, function() {
         User.findOne({username: 'kelly'}, function(err, kelly) {
-          test.ok(!err)
-          test.ok(kelly)
+          test.ok(!err);
+          test.ok(kelly);
           kelly.parent(function(err, node) {
             test.ok(!err);
-            test.equal('meredith',node.username)
-            test.done()
+            test.equal('meredith',node.username);
+            test.done();
           });
         });
       });
@@ -193,7 +195,7 @@ var tests = testCase({
         User.findOne({username: 'kelly'}, function(err, kelly) {
           kelly.selfAndAncestors(function(err, people) {
             test.ok(!err);
-            test.deepEqual(['kelly', 'meredith', 'michael'], people.map(function(p) {return p.username}).sort());
+            test.deepEqual(['kelly', 'meredith', 'michael'], people.map(function(p) {return p.username; }).sort());
             test.done();
           });
         });
@@ -207,7 +209,7 @@ var tests = testCase({
         User.findOne({username: 'kelly'}, function(err, kelly) {
           kelly.ancestors(function(err, people) {
             test.ok(!err);
-            test.deepEqual(['meredith', 'michael'], people.map(function(p) {return p.username}).sort());
+            test.deepEqual(['meredith', 'michael'], people.map(function(p) {return p.username; }).sort());
             test.done();
           });
         });
@@ -221,7 +223,7 @@ var tests = testCase({
         User.findOne({username: 'michael'}, function(err, michael) {
           michael.ancestors(function(err, people) {
             test.ok(!err);
-            test.deepEqual([], people.map(function(p) {return p.username}).sort());
+            test.deepEqual([], people.map(function(p) {return p.username; }).sort());
             test.done();
           });
         });
@@ -237,7 +239,7 @@ var tests = testCase({
             test.ok(!err);
             test.deepEqual(
               ['angela', 'jim', 'meredith', 'michael'], 
-              people.map(function(p) {return p.username}).sort());
+              people.map(function(p) {return p.username; }).sort());
             test.done();
           });
         });
@@ -251,7 +253,7 @@ var tests = testCase({
         User.findOne({username: 'michael'}, function(err, michael) {
           michael.children(function(err, people) {
             test.ok(!err);
-            test.deepEqual(['angela', 'jim', 'meredith'], people.map(function(p) {return p.username}).sort());
+            test.deepEqual(['angela', 'jim', 'meredith'], people.map(function(p) {return p.username; }).sort());
             test.done();
           });
         });
@@ -267,7 +269,7 @@ var tests = testCase({
             test.ok(!err);
             test.deepEqual(
               ['angela', 'creed', 'dwight', 'jim', 'kelly', 'meredith', 'michael', 'oscar', 'phyllis', 'stanley'], 
-              people.map(function(p) {return p.username}).sort()
+              people.map(function(p) {return p.username; }).sort()
             );
             test.done();
           });
@@ -284,7 +286,7 @@ var tests = testCase({
             test.ok(!err);
             test.deepEqual(
               ['angela', 'creed', 'dwight', 'jim', 'kelly', 'meredith', 'oscar', 'phyllis', 'stanley'], 
-              people.map(function(p) {return p.username}).sort()
+              people.map(function(p) {return p.username; }).sort()
             );
             test.done();
           });
@@ -293,7 +295,7 @@ var tests = testCase({
     });
   },
   'level should return 0 for root node': function(test) {
-    test.expect(2)
+    test.expect(2);
     User.findOne({username: 'michael'}, function(err, user) {
       User.rebuildTree(user, 1, function() {
         User.findOne({username: 'michael'}, function(err, michael) {
@@ -315,7 +317,7 @@ var tests = testCase({
             test.ok(!err);
             test.deepEqual(
               ['angela', 'jim', 'meredith'],
-              people.map(function(p) {return p.username}).sort()
+              people.map(function(p) {return p.username; }).sort()
             );
             test.done();
           });
@@ -332,7 +334,7 @@ var tests = testCase({
             test.ok(!err);
             test.deepEqual(
               ['angela', 'jim'],
-              people.map(function(p) {return p.username}).sort()
+              people.map(function(p) {return p.username; }).sort()
             );
             test.done();
           });
@@ -368,7 +370,7 @@ var tests = testCase({
     test.expect(4);
     var user = new User({
       username: 'joe'
-    })
+    });
     user.save(function(err, joe) {
       test.ok(!err);
       test.equal('joe', joe.username);
@@ -378,7 +380,7 @@ var tests = testCase({
     });
   },
   'adding a new node to a built tree should re-arrange the tree correctly': function(test) {
-    test.expect(18)
+    test.expect(18);
     User.findOne({username: 'michael'}, function(err, michael) {
       User.rebuildTree(michael, 1, function() {
         User.findOne({username: 'creed'}, function(err, creed) {
@@ -424,14 +426,14 @@ var tests = testCase({
     });
   },
   'removing a node to a built tree should re-arrange the tree correctly': function(test) {
-    test.expect(22)
+    test.expect(22);
     User.findOne({username: 'michael'}, function(err, michael) {
       User.rebuildTree(michael, 1, function() {
         User.findOne({username: 'creed'}, function(err, creed) {
           var newUser = new User({
             username: 'joe',
             parentId: creed._id
-          })
+          });
           newUser.save(function(err, joe) {
             User.find(function(err, users) {
               // see docs/test_tree_after_leaf_insertion.png for the graphical representation of this tree 
