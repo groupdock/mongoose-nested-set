@@ -1,7 +1,7 @@
 {
   "author": "Luc Castera <luc.castera@gmail.com> (https://github.com/dambalah)",
   "name": "mongoose-nested-set",
-  "description": "A mongoose plugin implementing the nested set pattern for mongoose models",
+  "description": "A mongoose plugin implementing the nested set pattern (aka as trees or hierarchies) for mongoose models",
   "homepage": "https://github.com/groupdock/mongoose-nested-set",
   "keywords": [
     "mongoose",
