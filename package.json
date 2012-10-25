@@ -23,10 +23,10 @@
     "node": "< 0.7.x"
   },
   "dependencies": {
-    "mongoose": "~2.4.5",
-    "async": "~0.1.15"
+    "mongoose": "~2.5.14",
+    "async": "~0.1.22"
   },
   "devDependencies": {
-    "nodeunit": "~0.6.4"
+    "nodeunit": "~0.7.4"
   }
 }
