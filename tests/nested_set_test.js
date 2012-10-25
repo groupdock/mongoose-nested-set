@@ -66,6 +66,9 @@ var tests = testCase({
       }
     ])
   },
+  tearDown: function(callback) {
+    mongoose.disconnect(callback);
+  },
   'is sane': function(test) {
     test.expect(3);
     test.ok(User);
