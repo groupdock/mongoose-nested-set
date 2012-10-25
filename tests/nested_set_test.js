@@ -64,7 +64,9 @@ var tests = testCase({
     ]);
   },
   tearDown: function(callback) {
-    mongoose.disconnect(callback);
+    mongoose.connection.collections.users.drop( function(err) {
+      mongoose.disconnect(callback);
+    });
   },
   'is sane': function(test) {
     test.expect(3);
