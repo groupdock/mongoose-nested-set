@@ -113,6 +113,16 @@ To run the tests:
 npm test
 ```
 
+
+### Changelog
+
+#### Oct 25, 2012: Version 0.0.2
+
+* Better tests
+* Code cleanup
+* Updated package.json to latest dependencies
+* Added mongodb indexes on lft, rgt, and parentId
+
 ### Authors
 
 * Luc Castera: [https://github.com/dambalah](https://github.com/dambalah)
