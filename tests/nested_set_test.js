@@ -1,4 +1,4 @@
-/*globals require, module, console, setTimeout */
+/*globals require, module, console */
 
 'use strict';
 
@@ -59,12 +59,7 @@ var tests = testCase({
           stanley,
           dwight,
           oscar
-        ], function(item, cb) { item.save(cb); }, function(err) {
-          setTimeout(callback, 500);
-        });
-      },
-      function(callback) {
-        next();
+        ], function(item, cb) { item.save(cb); }, next);
       }
     ]);
   },
