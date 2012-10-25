@@ -105,6 +105,14 @@ The following methods must be used with a callback. The callback method will be 
 * [Storing Hierarchical Data in a Database Article] (http://www.sitepoint.com/hierarchical-data-database/)
 * [Trees in MongoDB] (http://www.mongodb.org/display/DOCS/Trees+in+MongoDB)
 
+### Development
+
+To run the tests:
+
+```
+npm test
+```
+
 ### Authors
 
 * Luc Castera: [https://github.com/dambalah](https://github.com/dambalah)
