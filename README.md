@@ -116,6 +116,14 @@ npm test
 
 ### Changelog
 
+#### Oct 26, 2012: Version 0.0.4
+
+* Bug fixes
+
+#### Oct 25, 2012: Version 0.0.3
+
+* Bug fixes
+
 #### Oct 25, 2012: Version 0.0.2
 
 * Better tests
