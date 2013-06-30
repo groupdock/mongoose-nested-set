@@ -116,6 +116,12 @@ npm test
 
 ### Changelog
 
+### Jun 30, 2013: Version 0.0.5
+
+* Added compound index on lft,rgt for selfAndDescendants and
+  selfAndAncestors queries
+* A few small refactorings of tests
+
 #### Oct 26, 2012: Version 0.0.4
 
 * Bug fixes
