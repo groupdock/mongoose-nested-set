@@ -83,6 +83,7 @@ var tests = testCase({
     });
   },
   'can read parentIds as ObjectIDs': function(test) {
+    test.expect(10); // 1 to test err + only 9 of the tests will run in the forEach loop since root has parentId of null
     User.find(function(err, users) {
       if (err) { console.log(err); }
       test.ok(!err);
@@ -95,6 +96,7 @@ var tests = testCase({
     });
   },
   'rebuildTree should set lft and rgt based on parentIds': function(test) {
+    test.expect(20);
     User.findOne({username: 'michael'}, function(err, user) {
       User.rebuildTree(user, 1, function() {
         User.find(function(err, users) {
