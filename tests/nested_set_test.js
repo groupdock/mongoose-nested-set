@@ -28,10 +28,6 @@ var tests = testCase({
         callback();
       },
       function(callback) {
-        // drop users from mongodb
-        User.remove({}, callback);
-      },
-      function(callback) {
         // see diagram in docs/test_tree.png for a representation of this tree
         var michael = new User({username: 'michael'});
 
