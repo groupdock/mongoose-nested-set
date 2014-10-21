@@ -374,7 +374,7 @@ var tests = testCase({
       test.done();
     });
   },
-  'adding a new node to a built tree should re-arrange the tree correctly': function(test) {
+  'removing a node to a built tree should re-arrange the tree correctly': function(test) {
     test.expect(18);
     User.findOne({username: 'michael'}, function(err, michael) {
       User.rebuildTree(michael, 1, function() {
@@ -420,7 +420,7 @@ var tests = testCase({
       });
     });
   },
-  'removing a node to a built tree should re-arrange the tree correctly': function(test) {
+  'adding a new node to a built tree should re-arrange the tree correctly': function(test) {
     test.expect(22);
     User.findOne({username: 'michael'}, function(err, michael) {
       User.rebuildTree(michael, 1, function() {
