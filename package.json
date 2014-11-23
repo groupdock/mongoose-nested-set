@@ -17,7 +17,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/nodeunit/bin/nodeunit tests/nested_set_test.js"
+    "test": "./node_modules/nodeunit/bin/nodeunit tests/*.js"
   },
   "engines": {
     "node": "< 0.7.x"

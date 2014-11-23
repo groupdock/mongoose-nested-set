@@ -233,7 +233,7 @@ var tests = testCase({
           michael.selfAndChildren(function(err, people) {
             test.ok(!err);
             test.deepEqual(
-              ['angela', 'jim', 'meredith', 'michael'], 
+              ['angela', 'jim', 'meredith', 'michael'],
               people.map(function(p) {return p.username; }).sort());
             test.done();
           });
@@ -263,7 +263,7 @@ var tests = testCase({
           michael.selfAndDescendants(function(err, people) {
             test.ok(!err);
             test.deepEqual(
-              ['angela', 'creed', 'dwight', 'jim', 'kelly', 'meredith', 'michael', 'oscar', 'phyllis', 'stanley'], 
+              ['angela', 'creed', 'dwight', 'jim', 'kelly', 'meredith', 'michael', 'oscar', 'phyllis', 'stanley'],
               people.map(function(p) {return p.username; }).sort()
             );
             test.done();
@@ -280,7 +280,7 @@ var tests = testCase({
           michael.descendants(function(err, people) {
             test.ok(!err);
             test.deepEqual(
-              ['angela', 'creed', 'dwight', 'jim', 'kelly', 'meredith', 'oscar', 'phyllis', 'stanley'], 
+              ['angela', 'creed', 'dwight', 'jim', 'kelly', 'meredith', 'oscar', 'phyllis', 'stanley'],
               people.map(function(p) {return p.username; }).sort()
             );
             test.done();
@@ -381,7 +381,7 @@ var tests = testCase({
         User.findOne({username: 'creed'}, function(err, creed) {
           creed.remove(function() {
             User.find(function(err, users) {
-              // see docs/test_tree_after_leaf_insertion.png for the graphical representation of this tree 
+              // see docs/test_tree_after_leaf_insertion.png for the graphical representation of this tree
               // with lft/rgt values after the insertion
               users.forEach(function(person) {
                 if (person.username === 'michael') {
@@ -431,7 +431,7 @@ var tests = testCase({
           });
           newUser.save(function(err, joe) {
             User.find(function(err, users) {
-              // see docs/test_tree_after_leaf_insertion.png for the graphical representation of this tree 
+              // see docs/test_tree_after_leaf_insertion.png for the graphical representation of this tree
               // with lft/rgt values after the insertion
               users.forEach(function(person) {
                 if (person.username === 'michael') {
