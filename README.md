@@ -8,7 +8,7 @@ A mongoose plugin implementing the nested set pattern for mongoose models
 var mongoose = require('mongoose'),
     NestedSetPlugin = require('mongoose-nested-set'),
     Schema = mongoose.Schema;
-    
+
 mongoose.connect('mongodb://localhost/nested_set_test');
 
 var UserSchema = new Schema({
@@ -30,6 +30,12 @@ The plugin adds the following attributes to the model:
 * rgt: holds the right value of the node in the tree
 
 * parentId: holds the _id of the parent node
+
+### Options
+
+The plugin supports the following options:
+
+* groupingKey: a key to denote that elements in the tree belong to a group. This is helpful to maintain multiple trees within the same collection. Eg. in the tests we have two trees, grouped by the attribute 'organization' on the model, in that case we've given the { groupingKey: 'organization' } as options.
 
 ### Examples
 
