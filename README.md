@@ -122,6 +122,11 @@ npm test
 
 ### Changelog
 
+
+### Nov 23, 2014: Version 0.0.6
+
+* New Feature: added groupingKey option
+
 ### Jun 30, 2013: Version 0.0.5
 
 * Added compound index on lft,rgt for selfAndDescendants and
