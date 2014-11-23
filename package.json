@@ -20,7 +20,7 @@
     "test": "./node_modules/nodeunit/bin/nodeunit tests/*.js"
   },
   "engines": {
-    "node": "< 0.7.x"
+    "node": "> 0.7.x"
   },
   "dependencies": {
     "mongoose": "~2.5.14",
