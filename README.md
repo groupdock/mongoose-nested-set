@@ -84,6 +84,8 @@ The following methods must be used with a callback. The callback method will be 
 
 * selfAndAncestors(callback)
 
+* parent(callback)
+
 * ancestors(callback)
 
 * selfAndChildren(callback)
