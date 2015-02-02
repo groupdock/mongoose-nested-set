@@ -232,9 +232,7 @@ var tests = testCase({
         User.findOne({username: 'michael'}, function(err, michael) {
           michael.selfAndChildren(function(err, people) {
             test.ok(!err);
-            test.deepEqual(
-              ['angela', 'jim', 'meredith', 'michael'],
-              people.map(function(p) {return p.username; }).sort());
+            test.deepEqual(['angela', 'jim', 'meredith', 'michael'], people.map(function(p) {return p.username; }).sort());
             test.done();
           });
         });
