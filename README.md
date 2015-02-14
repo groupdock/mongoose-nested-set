@@ -125,7 +125,7 @@ npm test
 ### Changelog
 
 
-## Feb 14, 2015: Version 0.0.7
+#### Feb 14, 2015: Version 0.0.7
 
 * Converted methods to follow mongoose params model #11
 
