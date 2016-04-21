@@ -24,8 +24,8 @@
     "node": "> 0.7.x"
   },
   "dependencies": {
-    "mongoose": "~2.5.14",
-    "async": "~0.1.22"
+    "async": "^1.5.2",
+    "mongoose": "~2.5.14"
   },
   "devDependencies": {
     "istanbul": "^0.4.3",
