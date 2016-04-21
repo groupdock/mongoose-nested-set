@@ -29,6 +29,6 @@
   },
   "devDependencies": {
     "istanbul": "^0.4.3",
-    "nodeunit": "~0.7.4"
+    "nodeunit": "^0.9.1"
   }
 }
