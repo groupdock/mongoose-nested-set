@@ -77,10 +77,10 @@ var tests = testCase({
           });
           UserSchema.plugin(NestedSetPlugin);
           User = mongoose.model('User', UserSchema);
-          callback();
+          return callback();
         } catch (err) {
           console.log(err);
-          callback(err);
+          return callback(err);
         }
       },
       function(callback) {
@@ -93,6 +93,9 @@ var tests = testCase({
   },
   tearDown: function(callback) {
     mongoose.connection.collections.users.drop( function(err) {
+      if (err) {
+        console.log(err);
+      }
       mongoose.disconnect(callback);
     });
   },
@@ -128,10 +131,13 @@ var tests = testCase({
     });
   },
   'rebuildTree should set lft and rgt based on parentIds (A)': function(test) {
-    test.expect(20);
+    test.expect(23);
     User.findOne({username: 'michael', organization: 'A'}, function(err, user) {
-      User.rebuildTree(user, 1, function() {
+      test.ok(!err);
+      User.rebuildTree(user, 1, function(err) {
+        test.ok(!err);
         User.find({organization: 'A'}, function(err, users) {
+          test.ok(!err);
           // see docs/test_tree.png for the graphical representation of this tree with lft/rgt values
           users.forEach(function(person) {
             if (person.username === 'michael') {
@@ -172,10 +178,13 @@ var tests = testCase({
     });
   },
   'rebuildTree should set lft and rgt based on parentIds (B)': function(test) {
-    test.expect(16);
+    test.expect(19);
     User.findOne({username: 'michael', organization: 'B'}, function(err, user) {
-      User.rebuildTree(user, 1, function() {
+      test.ok(!err);
+      User.rebuildTree(user, 1, function(err) {
+        test.ok(!err);
         User.find({organization: 'B'}, function(err, users) {
+          test.ok(!err);
           // see docs/test_tree.png for the graphical representation of this tree with lft/rgt values
           users.forEach(function(person) {
             if (person.username === 'michael') {

@@ -25,14 +25,14 @@ var tests = testCase({
           mongoose.modelSchemas = {};
 
           UserSchema = new Schema({
-            username: {type: String},
+            username: {type: String}
           });
           UserSchema.plugin(NestedSetPlugin);
           User = mongoose.model('User', UserSchema);
-          callback();
+          return callback();
         } catch (err) {
           console.log(err);
-          callback(err);
+          return callback(err);
         }
       },
       function(callback) {
@@ -71,6 +71,9 @@ var tests = testCase({
   },
   tearDown: function(callback) {
     mongoose.connection.collections.users.drop( function(err) {
+      if (err) {
+        console.log(err);
+      }
       mongoose.disconnect(callback);
     });
   },
@@ -106,10 +109,13 @@ var tests = testCase({
     });
   },
   'rebuildTree should set lft and rgt based on parentIds': function(test) {
-    test.expect(20);
+    test.expect(23);
     User.findOne({username: 'michael'}, function(err, user) {
-      User.rebuildTree(user, 1, function() {
+      test.ok(!err);
+      User.rebuildTree(user, 1, function(err) {
+        test.ok(!err);
         User.find(function(err, users) {
+          test.ok(!err);
           // see docs/test_tree.png for the graphical representation of this tree with lft/rgt values
           users.forEach(function(person) {
             if (person.username === 'michael') {
@@ -150,12 +156,16 @@ var tests = testCase({
     });
   },
   'isLeaf should return true if node is leaf': function(test) {
-    test.expect(2);
+    test.expect(6);
     User.findOne({username: 'michael'}, function(err, user) {
-      User.rebuildTree(user, 1, function() {
+      test.ok(!err);
+      User.rebuildTree(user, 1, function(err) {
+        test.ok(!err);
         User.findOne({username: 'kelly'}, function(err, kelly) {
+          test.ok(!err);
           test.ok(kelly.isLeaf());
           User.findOne({username: 'michael'}, function(err, michael) {
+            test.ok(!err);
             test.ok(!michael.isLeaf());
             test.done();
           });
@@ -164,12 +174,16 @@ var tests = testCase({
     });
   },
   'isChild should return true if node has a parent': function(test) {
-    test.expect(2);
+    test.expect(6);
     User.findOne({username: 'michael'}, function(err, user) {
-      User.rebuildTree(user, 1, function() {
+      test.ok(!err);
+      User.rebuildTree(user, 1, function(err) {
+        test.ok(!err);
         User.findOne({username: 'kelly'}, function(err, kelly) {
+          test.ok(!err);
           test.ok(kelly.isChild());
           User.findOne({username: 'michael'}, function(err, michael) {
+            test.ok(!err);
             test.ok(!michael.isChild());
             test.done();
           });
@@ -178,9 +192,11 @@ var tests = testCase({
     });
   },
   'parent should return parent node': function(test) {
-    test.expect(4);
+    test.expect(6);
     User.findOne({username: 'michael'}, function(err, user) {
-      User.rebuildTree(user, 1, function() {
+      test.ok(!err);
+      User.rebuildTree(user, 1, function(err) {
+        test.ok(!err);
         User.findOne({username: 'kelly'}, function(err, kelly) {
           test.ok(!err);
           test.ok(kelly);
@@ -194,10 +210,13 @@ var tests = testCase({
     });
   },
   'selfAndAncestors should return all ancestors higher up in tree + current node': function(test) {
-    test.expect(2);
+    test.expect(5);
     User.findOne({username: 'michael'}, function(err, user) {
-      User.rebuildTree(user, 1, function() {
+      test.ok(!err);
+      User.rebuildTree(user, 1, function(err) {
+        test.ok(!err);
         User.findOne({username: 'kelly'}, function(err, kelly) {
+          test.ok(!err);
           kelly.selfAndAncestors(function(err, people) {
             test.ok(!err);
             test.deepEqual(['kelly', 'meredith', 'michael'], people.map(function(p) {return p.username; }).sort());
@@ -208,10 +227,13 @@ var tests = testCase({
     });
   },
   'ancestors should return all ancestors higher up in tree': function(test) {
-    test.expect(2);
+    test.expect(5);
     User.findOne({username: 'michael'}, function(err, user) {
-      User.rebuildTree(user, 1, function() {
+      test.ok(!err);
+      User.rebuildTree(user, 1, function(err) {
+        test.ok(!err);
         User.findOne({username: 'kelly'}, function(err, kelly) {
+          test.ok(!err);
           kelly.ancestors(function(err, people) {
             test.ok(!err);
             test.deepEqual(['meredith', 'michael'], people.map(function(p) {return p.username; }).sort());
@@ -222,10 +244,13 @@ var tests = testCase({
     });
   },
   'ancestors should return empty array if it is a root node': function(test) {
-    test.expect(2);
+    test.expect(5);
     User.findOne({username: 'michael'}, function(err, user) {
-      User.rebuildTree(user, 1, function() {
+      test.ok(!err);
+      User.rebuildTree(user, 1, function(err) {
+        test.ok(!err);
         User.findOne({username: 'michael'}, function(err, michael) {
+          test.ok(!err);
           michael.ancestors(function(err, people) {
             test.ok(!err);
             test.deepEqual([], people.map(function(p) {return p.username; }).sort());
@@ -236,10 +261,13 @@ var tests = testCase({
     });
   },
   'selfAndChildren should return all children + current node': function(test) {
-    test.expect(2);
+    test.expect(5);
     User.findOne({username: 'michael'}, function(err, user) {
-      User.rebuildTree(user, 1, function() {
+      test.ok(!err);
+      User.rebuildTree(user, 1, function(err) {
+        test.ok(!err);
         User.findOne({username: 'michael'}, function(err, michael) {
+          test.ok(!err);
           michael.selfAndChildren(function(err, people) {
             test.ok(!err);
             test.deepEqual(['angela', 'jim', 'meredith', 'michael'], people.map(function(p) {return p.username; }).sort());
@@ -250,10 +278,13 @@ var tests = testCase({
     });
   },
   'children should return all children': function(test) {
-    test.expect(2);
+    test.expect(5);
     User.findOne({username: 'michael'}, function(err, user) {
-      User.rebuildTree(user, 1, function() {
+      test.ok(!err);
+      User.rebuildTree(user, 1, function(err) {
+        test.ok(!err);
         User.findOne({username: 'michael'}, function(err, michael) {
+          test.ok(!err);
           michael.children(function(err, people) {
             test.ok(!err);
             test.deepEqual(['angela', 'jim', 'meredith'], people.map(function(p) {return p.username; }).sort());
@@ -264,10 +295,13 @@ var tests = testCase({
     });
   },
   'selfAndDescendants should return all descendants + current node': function(test) {
-    test.expect(2);
+    test.expect(5);
     User.findOne({username: 'michael'}, function(err, user) {
-      User.rebuildTree(user, 1, function() {
+      test.ok(!err);
+      User.rebuildTree(user, 1, function(err) {
+        test.ok(!err);
         User.findOne({username: 'michael'}, function(err, michael) {
+          test.ok(!err);
           michael.selfAndDescendants(function(err, people) {
             test.ok(!err);
             test.deepEqual(
@@ -281,10 +315,13 @@ var tests = testCase({
     });
   },
   'descendants should return all descendants': function(test) {
-    test.expect(2);
+    test.expect(5);
     User.findOne({username: 'michael'}, function(err, user) {
-      User.rebuildTree(user, 1, function() {
+      test.ok(!err);
+      User.rebuildTree(user, 1, function(err) {
+        test.ok(!err);
         User.findOne({username: 'michael'}, function(err, michael) {
+          test.ok(!err);
           michael.descendants(function(err, people) {
             test.ok(!err);
             test.deepEqual(
@@ -298,10 +335,13 @@ var tests = testCase({
     });
   },
   'level should return 0 for root node': function(test) {
-    test.expect(2);
+    test.expect(5);
     User.findOne({username: 'michael'}, function(err, user) {
-      User.rebuildTree(user, 1, function() {
+      test.ok(!err);
+      User.rebuildTree(user, 1, function(err) {
+        test.ok(!err);
         User.findOne({username: 'michael'}, function(err, michael) {
+          test.ok(!err);
           michael.level(function(err, value) {
             test.ok(!err);
             test.equal(0, value);
@@ -312,10 +352,13 @@ var tests = testCase({
     });
   },
   'selfAndSiblings should return all nodes with same parent node + current node': function(test) {
-    test.expect(2);
+    test.expect(5);
     User.findOne({username: 'michael'}, function(err, user) {
-      User.rebuildTree(user, 1, function() {
+      test.ok(!err);
+      User.rebuildTree(user, 1, function(err) {
+        test.ok(!err);
         User.findOne({username: 'meredith'}, function(err, meredith) {
+          test.ok(!err);
           meredith.selfAndSiblings(function(err, people) {
             test.ok(!err);
             test.deepEqual(
@@ -329,10 +372,13 @@ var tests = testCase({
     });
   },
   'siblings should return all nodes with same parent node': function(test) {
-    test.expect(2);
+    test.expect(5);
     User.findOne({username: 'michael'}, function(err, user) {
-      User.rebuildTree(user, 1, function() {
+      test.ok(!err);
+      User.rebuildTree(user, 1, function(err) {
+        test.ok(!err);
         User.findOne({username: 'meredith'}, function(err, meredith) {
+          test.ok(!err);
           meredith.siblings(function(err, people) {
             test.ok(!err);
             test.deepEqual(
@@ -346,10 +392,13 @@ var tests = testCase({
     });
   },
   'kelly is a descendant of michael': function(test) {
-    test.expect(2);
+    test.expect(5);
     User.findOne({username: 'michael'}, function(err, michael) {
-      User.rebuildTree(michael, 1, function() {
+      test.ok(!err);
+      User.rebuildTree(michael, 1, function(err) {
+        test.ok(!err);
         User.findOne({username: 'kelly'}, function(err, kelly) {
+          test.ok(!err);
           test.ok(kelly.isDescendantOf(michael));
           test.ok(!michael.isDescendantOf(kelly));
           test.done();
@@ -358,10 +407,13 @@ var tests = testCase({
     });
   },
   'michael is an ancestor of kelly': function(test) {
-    test.expect(2);
+    test.expect(5);
     User.findOne({username: 'michael'}, function(err, michael) {
-      User.rebuildTree(michael, 1, function() {
+      test.ok(!err);
+      User.rebuildTree(michael, 1, function(err) {
+        test.ok(!err);
         User.findOne({username: 'kelly'}, function(err, kelly) {
+          test.ok(!err);
           test.ok(michael.isAncestorOf(kelly));
           test.ok(!kelly.isAncestorOf(michael));
           test.done();
@@ -383,12 +435,17 @@ var tests = testCase({
     });
   },
   'removing a node to a built tree should re-arrange the tree correctly': function(test) {
-    test.expect(18);
+    test.expect(23);
     User.findOne({username: 'michael'}, function(err, michael) {
-      User.rebuildTree(michael, 1, function() {
+      test.ok(!err);
+      User.rebuildTree(michael, 1, function(err) {
+        test.ok(!err);
         User.findOne({username: 'creed'}, function(err, creed) {
-          creed.remove(function() {
+          test.ok(!err);
+          creed.remove(function(err) {
+            test.ok(!err);
             User.find(function(err, users) {
+              test.ok(!err);
               // see docs/test_tree_after_leaf_insertion.png for the graphical representation of this tree
               // with lft/rgt values after the insertion
               users.forEach(function(person) {
@@ -429,16 +486,21 @@ var tests = testCase({
     });
   },
   'adding a new node to a built tree should re-arrange the tree correctly': function(test) {
-    test.expect(22);
+    test.expect(27);
     User.findOne({username: 'michael'}, function(err, michael) {
-      User.rebuildTree(michael, 1, function() {
+      test.ok(!err);
+      User.rebuildTree(michael, 1, function(err) {
+        test.ok(!err);
         User.findOne({username: 'creed'}, function(err, creed) {
+          test.ok(!err);
           var newUser = new User({
             username: 'joe',
             parentId: creed._id
           });
           newUser.save(function(err, joe) {
+            test.ok(!err);
             User.find(function(err, users) {
+              test.ok(!err);
               // see docs/test_tree_after_leaf_insertion.png for the graphical representation of this tree
               // with lft/rgt values after the insertion
               users.forEach(function(person) {
