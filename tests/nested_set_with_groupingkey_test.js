@@ -56,7 +56,7 @@ var createUsers = function(organization, callback) {
     ];
   }
 
-  async.forEach(users, function(item, cb) { item.save(cb); }, callback);
+  async.forEachOfSeries(users, function(item, id, cb) { item.save(cb); }, function() {callback()});
 };
 
 var tests = testCase({

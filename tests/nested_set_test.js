@@ -52,7 +52,7 @@ var tests = testCase({
 
         var oscar = new User({username: 'oscar', parentId: angela._id});
 
-        async.forEach([
+        async.forEachOfSeries([
           michael,
           meredith,
           jim,
@@ -63,7 +63,9 @@ var tests = testCase({
           stanley,
           dwight,
           oscar
-        ], function(item, cb) { item.save(cb); }, next);
+          ], function(item, id, cb) { item.save(cb); }, function(item) {
+            next();
+          });
       }
     ]);
   },
