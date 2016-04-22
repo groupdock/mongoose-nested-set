@@ -28,6 +28,7 @@
     "mongoose": "^4.4.12"
   },
   "devDependencies": {
+    "codeclimate-test-reporter": "^0.3.1",
     "istanbul": "^0.4.3",
     "nodeunit": "^0.9.1"
   }

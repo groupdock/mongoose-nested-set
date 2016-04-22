@@ -6,3 +6,8 @@ node_js:
   - "0.12"
   - "0.10"
   - "iojs"
+script:
+  # Run all test with enabled code covarage report
+  - npm run-script cover
+after_success:
+  - codeclimate-test-reporter < ./coverage/lcov.info
