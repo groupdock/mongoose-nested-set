@@ -20,12 +20,20 @@ var tests = testCase({
         callback();
       },
       function(callback) {
-        UserSchema = new Schema({
-          username: {type: String}
-        });
-        UserSchema.plugin(NestedSetPlugin);
-        User = mongoose.model('User', UserSchema);
-        callback();
+        try {
+          mongoose.models = {};
+          mongoose.modelSchemas = {};
+
+          UserSchema = new Schema({
+            username: {type: String},
+          });
+          UserSchema.plugin(NestedSetPlugin);
+          User = mongoose.model('User', UserSchema);
+          callback();
+        } catch (err) {
+          console.log(err);
+          callback(err);
+        }
       },
       function(callback) {
         // see diagram in docs/test_tree.png for a representation of this tree

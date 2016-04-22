@@ -67,13 +67,21 @@ var tests = testCase({
         callback();
       },
       function(callback) {
-        UserSchema = new Schema({
-          username: {type: String},
-          organization: {type: String}
-        });
-        UserSchema.plugin(NestedSetPlugin, { groupingKey: 'organization' });
-        User = mongoose.model('User', UserSchema);
-        callback();
+        try {
+          mongoose.models = {};
+          mongoose.modelSchemas = {};
+
+          UserSchema = new Schema({
+            username: {type: String},
+            organization: {type: String}
+          });
+          UserSchema.plugin(NestedSetPlugin);
+          User = mongoose.model('User', UserSchema);
+          callback();
+        } catch (err) {
+          console.log(err);
+          callback(err);
+        }
       },
       function(callback) {
         createUsers('A', callback);
