@@ -125,6 +125,10 @@ npm test
 ### Changelog
 
 
+#### Feb 14, 2015: Version 0.0.7
+
+* Converted methods to follow mongoose params model #11
+
 #### Nov 23, 2014: Version 0.0.6
 
 * New Feature: added groupingKey option
