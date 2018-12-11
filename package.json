@@ -17,16 +17,16 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/nodeunit/bin/nodeunit tests/*.js"
+    "test": "./node_modules/.bin/mocha tests/*.js"
   },
   "engines": {
     "node": "> 0.7.x"
   },
   "dependencies": {
-    "mongoose": "~2.5.14",
-    "async": "~0.1.22"
+    "mongoose": "~5.3.15",
+    "async": "~2.6.1"
   },
   "devDependencies": {
-    "nodeunit": "~0.7.4"
+    "mocha": "^5.2.0"
   }
 }
