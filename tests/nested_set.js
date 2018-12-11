@@ -457,6 +457,8 @@ describe('Normal nested set', function () {
                                 }
                             });
                             done();
+
+                            newUser.remove(); // Remove user after assertion
                         });
                     });
                 });
