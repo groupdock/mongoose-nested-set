@@ -1,5 +1,7 @@
 # mongoose-nested-set
 
+[![Build Status](https://travis-ci.org/saleh199/mongoose-nested-set.svg?branch=change-nodeunit-to-mocha)](https://travis-ci.org/saleh199/mongoose-nested-set)
+
 A mongoose plugin implementing the nested set pattern for mongoose models
 
 ### Usage
