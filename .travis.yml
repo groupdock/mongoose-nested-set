@@ -1,8 +1,7 @@
+sudo: false
 language: node_js
 services: mongodb
 node_js:
-  - "iojs"
-  - "7"
   - "6"
-  - "5"
-  - "4"
+  - "8"
+  - "10"
