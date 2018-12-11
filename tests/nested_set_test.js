@@ -12,66 +12,67 @@ let mongoose = require('mongoose'),
 let UserSchema,
     User;
 
-before(function (done) {
-    async.series([
-        function (callback) {
-            mongoose.connect('mongodb://localhost/nested_set_test', {useNewUrlParser: true});
-            mongoose.set('useCreateIndex', true);
-            callback();
-        },
-        function (callback) {
-            UserSchema = new Schema({
-                username: {type: String}
-            });
-            UserSchema.plugin(NestedSetPlugin);
-            User = mongoose.model('User', UserSchema);
-            callback(null);
-        },
-        function (callback) {
-            // see diagram in docs/test_tree.png for a representation of this tree
-            let michael = new User({username: 'michael'});
 
-            let meredith = new User({username: 'meredith', parentId: michael._id});
-            let jim = new User({username: 'jim', parentId: michael._id});
-            let angela = new User({username: 'angela', parentId: michael._id});
+describe('NestedSet', function () {
+    before(function (done) {
+        async.series([
+            function (callback) {
+                mongoose.connect('mongodb://localhost/nested_set_test', {useNewUrlParser: true});
+                mongoose.set('useCreateIndex', true);
+                callback();
+            },
+            function (callback) {
+                UserSchema = new Schema({
+                    username: {type: String}
+                });
+                UserSchema.plugin(NestedSetPlugin);
+                User = mongoose.model('User', UserSchema);
+                callback(null);
+            },
+            function (callback) {
+                // see diagram in docs/test_tree.png for a representation of this tree
+                let michael = new User({username: 'michael'});
 
-            let kelly = new User({username: 'kelly', parentId: meredith._id});
-            let creed = new User({username: 'creed', parentId: meredith._id});
+                let meredith = new User({username: 'meredith', parentId: michael._id});
+                let jim = new User({username: 'jim', parentId: michael._id});
+                let angela = new User({username: 'angela', parentId: michael._id});
 
-            let phyllis = new User({username: 'phyllis', parentId: jim._id});
-            let stanley = new User({username: 'stanley', parentId: jim._id});
-            let dwight = new User({username: 'dwight', parentId: jim._id});
+                let kelly = new User({username: 'kelly', parentId: meredith._id});
+                let creed = new User({username: 'creed', parentId: meredith._id});
 
-            let oscar = new User({username: 'oscar', parentId: angela._id});
+                let phyllis = new User({username: 'phyllis', parentId: jim._id});
+                let stanley = new User({username: 'stanley', parentId: jim._id});
+                let dwight = new User({username: 'dwight', parentId: jim._id});
 
-            async.eachSeries([
-                michael,
-                meredith,
-                jim,
-                angela,
-                kelly,
-                creed,
-                phyllis,
-                stanley,
-                dwight,
-                oscar
-            ], function (item, cb) {
-                item.save(cb);
-            }, callback);
-        }
-    ], function (err, results) {
-        if (!err) done();
+                let oscar = new User({username: 'oscar', parentId: angela._id});
+
+                async.eachSeries([
+                    michael,
+                    meredith,
+                    jim,
+                    angela,
+                    kelly,
+                    creed,
+                    phyllis,
+                    stanley,
+                    dwight,
+                    oscar
+                ], function (item, cb) {
+                    item.save(cb);
+                }, callback);
+            }
+        ], function (err, results) {
+            if (!err) done();
+        });
     });
-});
 
-after(function (done) {
-    mongoose.connection.collections.users.drop(function (err) {
-        mongoose.disconnect();
+    after(function (done) {
+        mongoose.connection.collections.users.drop(function (err) {
+            mongoose.disconnect();
+        });
+        done();
     });
-    done();
-});
 
-describe('Normal nested set', function () {
     it('is same', function (done) {
         assert.ok(User);
         assert.equal('function', typeof User);
@@ -467,14 +468,14 @@ describe('Normal nested set', function () {
     });
 
     it('removing a node to a built tree should re-arrange the tree correctly', function (done) {
-        User.findOne({username: 'michael'}, function(err, michael) {
-            User.rebuildTree(michael, 1, function() {
-                User.findOne({username: 'creed'}, function(err, creed) {
-                    creed.remove(function() {
-                        User.find(function(err, users) {
+        User.findOne({username: 'michael'}, function (err, michael) {
+            User.rebuildTree(michael, 1, function () {
+                User.findOne({username: 'creed'}, function (err, creed) {
+                    creed.remove(function () {
+                        User.find(function (err, users) {
                             // see docs/test_tree_after_leaf_insertion.png for the graphical representation of this tree
                             // with lft/rgt values after the insertion
-                            users.forEach(function(person) {
+                            users.forEach(function (person) {
                                 if (person.username === 'michael') {
                                     assert.equal(1, person.lft);
                                     assert.equal(18, person.rgt);
