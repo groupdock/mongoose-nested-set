@@ -23,8 +23,8 @@
     "node": "> 0.7.x"
   },
   "dependencies": {
-    "mongoose": "~5.3.15",
-    "async": "~2.6.1"
+    "async": "~2.6.1",
+    "mongoose": "^5.10.0"
   },
   "devDependencies": {
     "mocha": "^5.2.0"
